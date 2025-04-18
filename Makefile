@@ -1,21 +1,21 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    stempels_Makefile                                  :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: stempels <stempels@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 10:47:36 by stempels          #+#    #+#              #
-#    Updated: 2025/03/20 12:11:32 by stempels         ###   ########.fr        #
+#    Updated: 2025/04/17 17:02:23 by stempels         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #
 #MAKEFLAGS += --silent
 #
-NAME = push_swap 
+NAME = pipex 
 TYPE = EXEC
 #----------------------------COMPILER------------------------------------------#
-CC = clang
+CC = cc
 CCFLAGS = -Wall -Wextra -Werror -g
 CPPFLAGS = $(INC_FLAG)
 #
@@ -24,7 +24,7 @@ CPPFLAGS = $(INC_FLAG)
 #----------------------------MAIN----------------------------------------------#
 #----------------------------SRC-----------------------------------------------#
 SRC_DIR = src
-SRC = $(addprefix src/, $(addsuffix .c, main_push_swap push_swap push_swap_utils push_swap_utils2 manip_push manip_swap manip_rotate manip_rrotate)) 
+SRC = $(addprefix src/, $(addsuffix .c, main_pipex pipex pipex_utils)) 
 #
 #----------------------------OBJ-----------------------------------------------#
 OBJ_DIR = obj
@@ -70,7 +70,7 @@ ffclean: fclean libclean
 #
 re: ffclean all
 #
-.PHONY: all clean libclean fclean ffclean re design
+.PHONY: all clean libclean fclean ffclean re
 #----------------------------TEXT----------------------------------------------#
 GREEN=\033[0;32m
 NC=\033[0m
