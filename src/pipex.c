@@ -6,7 +6,7 @@
 /*   By: stempels <stempels@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 13:09:19 by stempels          #+#    #+#             */
-/*   Updated: 2025/04/17 17:47:12 by stempels         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:59:43 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	pipex(char **argv, int fd_out, char **env)
 	int	pipefd[2];
 	pid_t	pid;
 	char	*path;
+	char 	*test[3];
 
 	path = path_cmd(argv[2], env);
 	if (pipe(pipefd) == -1)
@@ -29,18 +30,24 @@ int	pipex(char **argv, int fd_out, char **env)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
+		test[0] = argv[2];
+		test[1] = argv[1];
+		test[2] = '\0';
 		close(pipefd[0]);
 		dup2(pipefd[1], 1);
-		execve(path, &argv[2], env);
+		execve(path, test, env);
 		return (EXIT_FAILURE);
 	}
 	close(pipefd[1]);
 	dup2(pipefd[0], 0);
-	dup2(fd_out, 1);
 	path = path_cmd(argv[3], env);
-	waitpid(pid, 0, 0);	
-	execve(path, &argv[3], env);
-	return (EXIT_FAILURE);
+	waitpid(pid, 0, 0);
+	test[0] = argv[3];
+	test[1] = '\0';
+	test[2] = '\0';
+	dup2(fd_out, 1);
+	execve(path, test, env);
+	return (0);
 }
 
 static char	**get_paths(char *name, char **env)
@@ -71,7 +78,7 @@ static char *path_cmd(char *cmd, char **env)
 	char	**paths;
 
 	paths = get_paths("PATH", env);
-	if (paths)
+	if (!paths)
 		return (NULL);
 	i = 0;
 	while (paths[i])
@@ -80,8 +87,8 @@ static char *path_cmd(char *cmd, char **env)
 		error = access(path_full, F_OK | X_OK);
 		if (error == 0)	
 			return (path_full);
-		if (error == -1)
-			return (NULL);
+		free(path_full);
+		path_full = NULL;
 		i++;
 	}
 	return (NULL);

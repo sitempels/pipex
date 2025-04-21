@@ -6,7 +6,7 @@
 #    By: stempels <stempels@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 10:47:36 by stempels          #+#    #+#              #
-#    Updated: 2025/04/17 17:02:23 by stempels         ###   ########.fr        #
+#    Updated: 2025/04/21 14:19:31 by stempels         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #
@@ -64,6 +64,7 @@ libclean:
 #
 fclean: clean
 	rm -rf $(NAME)
+	$(MAKE) fclean -C $(LIBFT_DIR)	
 	@echo "$(NAME) $(GREEN)$@ed !$(NC)"
 #
 ffclean: fclean libclean
