@@ -6,7 +6,7 @@
 /*   By: stempels <stempels@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:09:18 by stempels          #+#    #+#             */
-/*   Updated: 2025/03/20 16:12:10 by stempels         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:33:10 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		ft_isspace(char c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
 size_t	ft_strlen(const char *s);
+size_t	ft_arrlen(char **array);
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
@@ -79,6 +80,9 @@ char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
+/**/
+/*Free functions*/
+void	ft_free_arr(char **array);
 /**/
 /*--------------------------PRINTING_FUNCTIONS--------------------------------*/
 size_t	ft_putchar_fd(char c, int fd);

@@ -6,7 +6,7 @@
 #    By: stempels <stempels@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 10:47:36 by stempels          #+#    #+#              #
-#    Updated: 2025/04/21 14:19:31 by stempels         ###   ########.fr        #
+#    Updated: 2025/04/22 15:02:06 by stempels         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #
@@ -16,7 +16,7 @@ NAME = pipex
 TYPE = EXEC
 #----------------------------COMPILER------------------------------------------#
 CC = cc
-CCFLAGS = -Wall -Wextra -Werror -g
+CCFLAGS = -g
 CPPFLAGS = $(INC_FLAG)
 #
 #----------------------------LINKER--------------------------------------------#
@@ -50,7 +50,7 @@ lib:	$(LIBFT)
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 #
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) 
 	$(CC) $(CCFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -o $@
 	@echo "$(NAME) $(GREEN)created !$(NC)"
 #

@@ -12,12 +12,12 @@ int	main(int argc, char **argv)
 	extern char **environ;
 	char *path;
 
-	path = path_cmd(argv[1], environ);
+	path = "/usr/bin/cat";
 	test = (char **) malloc(sizeof(char *) * 3);
 	test[0] = argv[1];
-	test[1] = argv[2];
-	test[2] = '\0';
-	execve(path, &test[0], environ);
+	test[1] = NULL;
+	test[2] = NULL;
+	execve(path, test, environ);
 	return (-1);
 }
 

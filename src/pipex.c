@@ -6,23 +6,21 @@
 /*   By: stempels <stempels@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 13:09:19 by stempels          #+#    #+#             */
-/*   Updated: 2025/04/21 15:59:43 by stempels         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:15:00 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char *path_cmd(char *cmd, char **env);
 static char	**get_paths(char *name, char **env);
 
-int	pipex(char **argv, int fd_out, char **env)
+int	pipex(char ***arg, char **env, char *infile, char *outfile)
 {
 	int	pipefd[2];
+	int	fd_in;
+	int	fd_out;
 	pid_t	pid;
-	char	*path;
-	char 	*test[3];
 
-	path = path_cmd(argv[2], env);
 	if (pipe(pipefd) == -1)
 		return (EXIT_FAILURE);
 	pid = fork();
@@ -30,24 +28,21 @@ int	pipex(char **argv, int fd_out, char **env)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		test[0] = argv[2];
-		test[1] = argv[1];
-		test[2] = '\0';
+		fd_in = open(infile, O_RDONLY, O_CLOEXEC);
 		close(pipefd[0]);
 		dup2(pipefd[1], 1);
-		execve(path, test, env);
-		return (EXIT_FAILURE);
+//		close(pipefd[1]);
+		dup2(fd_in, 0);
+		execve(arg[1][0], arg[0], env);
+		return (free(arg[1][0]), ft_free_arr(arg[0]), -1);
 	}
 	close(pipefd[1]);
 	dup2(pipefd[0], 0);
-	path = path_cmd(argv[3], env);
-	waitpid(pid, 0, 0);
-	test[0] = argv[3];
-	test[1] = '\0';
-	test[2] = '\0';
+//	close(pipefd[0]);
+	fd_out = open(outfile, O_WRONLY, O_CLOEXEC);
 	dup2(fd_out, 1);
-	execve(path, test, env);
-	return (0);
+	execve(arg[3][0], arg[2], env);
+	return (free(arg[1][0]), ft_free_arr(arg[0]), -1);
 }
 
 static char	**get_paths(char *name, char **env)
@@ -70,7 +65,7 @@ static char	**get_paths(char *name, char **env)
 	return (paths);
 }
 
-static char *path_cmd(char *cmd, char **env)
+char	*path_cmd(char *cmd, char **env)
 {
 	int	i;
 	int	error;
