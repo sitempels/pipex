@@ -6,7 +6,7 @@
 /*   By: stempels <stempels@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 16:52:25 by stempels          #+#    #+#             */
-/*   Updated: 2025/04/23 10:33:22 by stempels         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:31:37 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@
 /**/
 /*---------------------------FUNCT--------------------------------------------*/
 int		pipex(char ***arg, char **env, char *infile, char *outfile);
-char	*path_cmd(char *cmd, char **env);
 /**/
 /*------------UTILS*/
-char	*get_full_path(char const *s1, char const *s2);
+char	*path_cmd(char *cmd, char **env);
 /**/
 #endif

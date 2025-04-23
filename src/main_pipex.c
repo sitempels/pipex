@@ -6,7 +6,7 @@
 /*   By: stempels <stempels@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:01:02 by stempels          #+#    #+#             */
-/*   Updated: 2025/04/23 15:11:31 by stempels         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:35:06 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int	handle_file(char **arg);
 
 int	main(int argc, char **argv)
 {
-	char	*infile;
-	char	*outfile;
-	char	**new_arg[5];
+	char		*infile;
+	char		*outfile;
+	char		**new_arg[5];
 	extern char	**environ;
 
 	if (argc != 5)
@@ -41,10 +41,13 @@ int	main(int argc, char **argv)
 
 static int	handle_file(char **arg)
 {
+	int	fd;
+
 	if (access(arg[4], F_OK) != -1)
 	{
 		unlink(arg[4]);
-		open(arg[4], O_CREAT, 00777);
+		fd = open(arg[4], O_CREAT, 00777);
+		close(fd);
 	}
 	if (access(arg[1], F_OK | W_OK) == -1
 		|| access(arg[4], F_OK | R_OK) == -1)
@@ -54,7 +57,6 @@ static int	handle_file(char **arg)
 
 static int	check_arg(char ***arg, char **env)
 {
-	int	fd;
 	char	*path_cmd1;
 	char	*path_cmd2;
 
