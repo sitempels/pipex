@@ -6,7 +6,7 @@
 /*   By: stempels <stempels@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 13:09:19 by stempels          #+#    #+#             */
-/*   Updated: 2025/04/24 09:52:59 by stempels         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:20:41 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	pipex(char ***arg, char **env, char *infile, char *outfile)
 	fd_out = open(outfile, O_WRONLY, O_CLOEXEC);
 	dup2(fd_out, 1);
 	close(fd_out);
-	waitpid(pid, 0, 0);
 	execve(arg[3][0], arg[2], env);
 	return (free(arg[3][0]), ft_free_arr(arg[0]), -1);
 }

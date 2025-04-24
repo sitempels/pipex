@@ -6,7 +6,7 @@
 /*   By: stempels <stempels@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:01:02 by stempels          #+#    #+#             */
-/*   Updated: 2025/04/24 12:12:14 by stempels         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:36:51 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,19 @@ static int	handle_file(char **arg)
 {
 	int	fd;
 
-	if (access(arg[4], F_OK) != -1)
+	if (access(arg[4], F_OK) == 0)
 	{
 		unlink(arg[4]);
 		fd = open(arg[4], O_CREAT, 00777);
 		close(fd);
 	}
-	if (access(arg[1], F_OK | W_OK) == -1
-		|| access(arg[4], F_OK | R_OK) == -1)
+	else
+	{
+		fd = open(arg[4], O_CREAT, 00777);
+		close(fd);
+	}
+	if (access(arg[1], F_OK | R_OK) == -1
+		|| access(arg[4], F_OK | W_OK) == -1)
 		return (0);
 	return (1);
 }
