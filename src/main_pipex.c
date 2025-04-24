@@ -6,7 +6,7 @@
 /*   By: stempels <stempels@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:01:02 by stempels          #+#    #+#             */
-/*   Updated: 2025/04/23 16:35:06 by stempels         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:12:14 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	main(int argc, char **argv)
 	extern char	**environ;
 
 	if (argc != 5)
-		return (-1);
+		return (write(2, "ARG Error\n", 10), -1);
 	if (!handle_file(argv))
-		return (-1);
+		return (write(2, "File Error\n", 11), -1);
 	infile = argv[1];
 	outfile = argv[4];
 	new_arg[0] = &argv[2];
@@ -34,8 +34,9 @@ int	main(int argc, char **argv)
 	new_arg[3] = &argv[4];
 	new_arg[4] = NULL;
 	if (!check_arg(new_arg, environ))
-		return (-1);
-	pipex(new_arg, environ, infile, outfile);
+		return (write(2, "Command Error\n", 14), -1);
+	if (pipex(new_arg, environ, infile, outfile) == -1)
+		write(2, "Error\n", 6);
 	return (0);
 }
 
